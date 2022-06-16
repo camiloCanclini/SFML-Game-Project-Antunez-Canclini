@@ -1,0 +1,41 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Compilar Programa",
+            "command": "C:\\w64devkit-1.14.0\\w64devkit\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "hola.cpp",
+                "background.cpp",
+                "player.cpp",
+                "-IC:\\SFML-2.5.1\\include ",
+                "-DSFML_STATIC",
+                "-LC:\\SFML-2.5.1\\lib",
+                "-lsfml-graphics-s",
+                "-lsfml-window-s",
+                "-lsfml-system-s",
+                "-lopengl32", 
+                "-lwinmm",
+                "-lgdi32"
+                
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Tarea generada por el depurador."
+        }
+    ],
+    "version": "2.0.0"
+}
