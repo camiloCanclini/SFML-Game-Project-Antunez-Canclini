@@ -29,7 +29,6 @@ public:
         cout << x << " moviendo " << y << endl;
         player.move(x,y);
         window.draw(player);
-        cout << "get()" << player.getPosition().y << endl;
     }
     void healthChange(int point){
         health += point;
@@ -61,10 +60,35 @@ public:
     void draw(sf::RenderWindow &window){
         window.draw(player);
     }
+    float acelerationPhysics(float aceleration){
+        float stepAceleration = 2, maxAceleration = 40;
+        if(aceleration < 0)
+        {
+            aceleration += stepAceleration;
+        }else{
+            if(aceleration > 0)
+            {
+                aceleration -= stepAceleration;
+            }else{
+                if(aceleration < -maxAceleration)
+                {
+                    aceleration = -maxAceleration;
+                }else{
+                    if(aceleration > maxAceleration)
+                    {
+                        aceleration = maxAceleration;
+                    }else{
+                        aceleration = 0;
+                    }
+                }
+            }
+        }
+        return aceleration;
+    }
 private:
     Texture texturePlayer;
     Sprite player;
-    float playerSizeX = 100, playerSizeY = 100, speed;
+    float playerSizeX = 100, playerSizeY = 100, speed, aceleration;
     int health = 10; 
 };
 

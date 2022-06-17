@@ -31,6 +31,7 @@ int main(void){
     timer.asSeconds(); 
     Background background("Resources/Textures/Environment/room.png", window);
     Player player(100,100,"Resources/Textures/Player/test.png",window);
+    float stepMove = 10.f, stepAceleration = 10.f; 
     Enemy enemy(400,400,"Resources/Textures/Enemies/pythonBlue1.png",window);
     Music backgroundMusic;
     if (!backgroundMusic.openFromFile("Resources/Music/QuincasMoreira-Robot City.ogg")){
@@ -44,7 +45,7 @@ int main(void){
     Event event; //Se crea el evento principal
     while (window.isOpen()){
         timer = clock.getElapsedTime();
-        cout << (int)timer.asSeconds() << endl;     
+        //cout << (int)timer.asSeconds() << endl;     
         window.clear();
         background.draw(window);
         player.draw(window);
@@ -54,46 +55,31 @@ int main(void){
                 case Event::Closed:
                     window.close();
                     break;
-                if(event.key.code == Keyboard::Up||event.key.code == Keyboard::W){
-                        cout << "se esta moviendo hacia arriba" << endl;
-                        player.moveTo(0.0f,-10.f,window);
-                        //menuOptionSelection(1)
-                        break;
-                }
-                case Event::KeyPressed:
-                    if(event.key.code == Keyboard::Left||event.key.code == Keyboard::A){
-                        cout << "se esta moviendo a la izquierda" << endl;
-                        player.moveTo(-10.0f,0.0f,window);
-                        break;
-                    }
-                    if(event.key.code == Keyboard::Right||event.key.code == Keyboard::D){
-                        cout << "se esta moviendo a la derecha" << endl;
-                        player.moveTo(10.0f,0.0f,window);
-                        break;
-                    }
-                    if(event.key.code == Keyboard::Up||event.key.code == Keyboard::W){
-                        cout << "se esta moviendo hacia arriba" << endl;
-                        player.moveTo(0.0f,-10.f,window);
-                        //menuOptionSelection(1)
-                        break;
-                    }
-                    if(event.key.code == Keyboard::Down||event.key.code == Keyboard::S){
-                        cout << "se esta moviendo hacia abajo" << endl;
-                        player.moveTo(0.f,10.f,window);
-                        //menuOptionSelection(-1)
-                        break;
-                    }
-                    if(event.key.code == Keyboard::Escape){
-                        cout << "Se abrió el menu" << endl;
-                        break;
-                    }
-                    if(event.key.code == Keyboard::B){
-                        cout << "Disparando" << endl;
-                        break;
-                    }
-                    break;
             }   
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+            {
+                // left key is pressed: move our character
+                player.moveTo(0.f, -stepMove, window);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            {
+                // left key is pressed: move our character
+                player.moveTo(0.f, stepMove, window);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
+                // left key is pressed: move our character
+                player.moveTo(stepMove, 0.f, window);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
+                // left key is pressed: move our character
+                player.moveTo(-stepMove, 0.f, window);
+            }
         }
+        x = Player::acelerationPhysics(x);
+        y = Player::acelerationPhysics(y);
+        player.move(x,y);
         window.display();
     }
 }
