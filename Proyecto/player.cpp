@@ -7,13 +7,10 @@ class Player
 {
 public:
     Player(int positionx, int positiony, string textureSourcePath, sf::RenderWindow &window){
+        cout << "Window?" << &window << endl;
         //Texture texturePlayer;
         texturePlayer.loadFromFile(textureSourcePath);
         texturePlayer.setSmooth(true);
-        //Se crea el sprite del jugador
-        //Sprite player;
-        // Tamaño en PX que tendra el jugador
-        float playerSizeX = 100, playerSizeY = 100; 
         player.setPosition(positionx,positiony);
         player.setTexture(texturePlayer);
         //Se hace regla de 3 para sacar escala para los valores declarados arriba:
@@ -28,8 +25,11 @@ public:
     void attack(Vector2<int> &direction){
 
     }
-    void moveTo(float x ,float y){
+    void moveTo(float x ,float y,sf::RenderWindow &window){
+        cout << x << " moviendo " << y << endl;
         player.move(x,y);
+        window.draw(player);
+        cout << "get()" << player.getPosition().y << endl;
     }
     void healthChange(int point){
         health += point;
@@ -58,12 +58,14 @@ public:
     void die(){
         
     }
+    void draw(sf::RenderWindow &window){
+        window.draw(player);
+    }
 private:
     Texture texturePlayer;
     Sprite player;
     float playerSizeX = 100, playerSizeY = 100, speed;
     int health = 10; 
-   
 };
 
 

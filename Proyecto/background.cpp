@@ -11,7 +11,9 @@ public:
         background.setScale((float)window.getSize().x/(float)textureBackground.getSize().x,(float)window.getSize().y/(float)textureBackground.getSize().y);
         window.draw(background);
     }
-
+    void draw(RenderWindow &window){
+       window.draw(background); 
+    }
 private:
     Texture textureBackground;
     Sprite background;

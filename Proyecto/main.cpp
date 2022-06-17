@@ -1,16 +1,15 @@
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
 #include<SFML/Audio/Music.hpp>
-#include "hola.h"
 #include "player.cpp"
 #include "background.cpp"
+#include "enemy.cpp"
 #include <iostream>
 using namespace sf;
 using namespace std;  
 
 int main(void){
     //Set Window---------------------------------------------------------------------
-
     /*Esto de la relacion se hace para que
     el programa no varie cuando se cambia 
     la resolucion*/ 
@@ -25,56 +24,77 @@ int main(void){
     window.create(VideoMode(actualResolution[0], actualResolution[1]), "Game");
     window.clear(Color::Red);
     window.setVerticalSyncEnabled(true); // Los fps se sincronizan con los de la pantalla
+    //window.setFramerateLimit(60);
+    Clock clock;
+    clock.getElapsedTime();
+    Time timer;
+    timer.asSeconds(); 
     Background background("Resources/Textures/Environment/room.png", window);
-    Player player(100,100,"Resources/Textures/Player/test.png", window);
-    
+    Player player(100,100,"Resources/Textures/Player/test.png",window);
+    Enemy enemy(400,400,"Resources/Textures/Enemies/pythonBlue1.png",window);
     Music backgroundMusic;
-    
-    if (!backgroundMusic.openFromFile("Resources/Music/QuincasMoreira-Robot City.ogg"))
-    return -1; // error
-    backgroundMusic.play();
-    //player.~Player(); 
-
-
-    //Set Player---------------------------------------------------------------------
-    /*
-    // Se carga la textura del jugador
-    int positionx=100, positiony=100;
-    Texture texturePlayer;
-    texturePlayer.loadFromFile("Resources/Textures/Player/test.png");
-    texturePlayer.setSmooth(true);
-    //Se crea el sprite del jugador
-    Sprite player;
-    // Tamaño en PX que tendra el jugador
-    float playerSizeX = 100, playerSizeY = 100; 
-    player.setPosition(positionx,positiony);
-    player.setTexture(texturePlayer);
-    //Se hace regla de 3 para sacar escala para los valores declarados arriba:
-    //((dimesionEnPixelesDeseada)/TamañoPx(textura.getSize())*escalaActual(1)= nuevaEscala)
-    player.setScale(playerSizeX/texturePlayer.getSize().x,playerSizeY/texturePlayer.getSize().y);
-    */
-    
-    //Set Background---------------------------------------------------------------------
-    /*
-    Texture texturebackground;
-    texturebackground.loadFromFile("Resources/Textures/Environment/room.png");
-    Sprite background;
-    background.setTexture(texturebackground);
-    background.setScale((float)window.getSize().x/(float)texturebackground.getSize().x,(float)window.getSize().y/(float)texturebackground.getSize().y);
-    */
-    //Draw the first instance---------------------------------------------------------------------
-    //window.draw(background);
-    //jugador.draw(window);
+    if (!backgroundMusic.openFromFile("Resources/Music/QuincasMoreira-Robot City.ogg")){
+        return -1; // error
+    }else{
+        backgroundMusic.setVolume(5.0f);
+        backgroundMusic.play();
+    }
     window.display();
     //Events---------------------------------------------------------------------
-    while (window.isOpen())
-    {     
-        Event event; //Se crea el evento principal
-        while (window.pollEvent(event)) //Se inicia el MAINLOOP
-        {
-            if (event.type == Event::Closed)
-                window.close();
+    Event event; //Se crea el evento principal
+    while (window.isOpen()){
+        timer = clock.getElapsedTime();
+        cout << (int)timer.asSeconds() << endl;     
+        window.clear();
+        background.draw(window);
+        player.draw(window);
+        enemy.draw(window);
+        while (window.pollEvent(event)){ //Se inicia el MAINLOOP
+            switch (event.type){
+                case Event::Closed:
+                    window.close();
+                    break;
+                if(event.key.code == Keyboard::Up||event.key.code == Keyboard::W){
+                        cout << "se esta moviendo hacia arriba" << endl;
+                        player.moveTo(0.0f,-10.f,window);
+                        //menuOptionSelection(1)
+                        break;
+                }
+                case Event::KeyPressed:
+                    if(event.key.code == Keyboard::Left||event.key.code == Keyboard::A){
+                        cout << "se esta moviendo a la izquierda" << endl;
+                        player.moveTo(-10.0f,0.0f,window);
+                        break;
+                    }
+                    if(event.key.code == Keyboard::Right||event.key.code == Keyboard::D){
+                        cout << "se esta moviendo a la derecha" << endl;
+                        player.moveTo(10.0f,0.0f,window);
+                        break;
+                    }
+                    if(event.key.code == Keyboard::Up||event.key.code == Keyboard::W){
+                        cout << "se esta moviendo hacia arriba" << endl;
+                        player.moveTo(0.0f,-10.f,window);
+                        //menuOptionSelection(1)
+                        break;
+                    }
+                    if(event.key.code == Keyboard::Down||event.key.code == Keyboard::S){
+                        cout << "se esta moviendo hacia abajo" << endl;
+                        player.moveTo(0.f,10.f,window);
+                        //menuOptionSelection(-1)
+                        break;
+                    }
+                    if(event.key.code == Keyboard::Escape){
+                        cout << "Se abrió el menu" << endl;
+                        break;
+                    }
+                    if(event.key.code == Keyboard::B){
+                        cout << "Disparando" << endl;
+                        break;
+                    }
+                    break;
+            }   
         }
+        window.display();
     }
 }
 

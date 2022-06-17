@@ -13,6 +13,7 @@
                 "hola.cpp",
                 "background.cpp",
                 "player.cpp",
+                "enemy.cpp",
                 "-IC:\\SFML-2.5.1\\include ",
                 "-DSFML_STATIC",
                 "-LC:\\SFML-2.5.1\\lib",
