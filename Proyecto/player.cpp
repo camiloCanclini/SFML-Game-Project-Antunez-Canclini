@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-//#include <string.h>
+#include <iostream>
 using namespace sf;
 using namespace std;
 
@@ -21,6 +21,10 @@ public:
         player.setScale(playerSizeX/texturePlayer.getSize().x,playerSizeY/texturePlayer.getSize().y);
         window.draw(player);
     }
+    ~Player(){
+        cout << "El objeto se deberia borrar" << endl;
+    }
+
     void attack(Vector2<int> &direction){
 
     }

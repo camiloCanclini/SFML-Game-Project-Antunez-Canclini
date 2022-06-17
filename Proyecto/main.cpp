@@ -1,4 +1,6 @@
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
+#include<SFML/Audio/Music.hpp>
 #include "hola.h"
 #include "player.cpp"
 #include "background.cpp"
@@ -13,7 +15,7 @@ int main(void){
     el programa no varie cuando se cambia 
     la resolucion*/ 
 
-    int actualResolution[2] = {1080,720}; // resolucion actual
+    float actualResolution[2] = {1080,720}; // resolucion actual
     int baseResolution[2] = {1080,720}; // resolucion base sobre la que se construyó el programa
     int aspectRatioX = (baseResolution[0]/actualResolution[0]); // relacion de la pantalla en x
     int aspectRatioY = (baseResolution[1]/actualResolution[1]); // relacion de la pantalla en y
@@ -23,8 +25,16 @@ int main(void){
     window.create(VideoMode(actualResolution[0], actualResolution[1]), "Game");
     window.clear(Color::Red);
     window.setVerticalSyncEnabled(true); // Los fps se sincronizan con los de la pantalla
-   
+    Background background("Resources/Textures/Environment/room.png", window);
+    Player player(100,100,"Resources/Textures/Player/test.png", window);
     
+    Music backgroundMusic;
+    
+    if (!backgroundMusic.openFromFile("Resources/Music/QuincasMoreira-Robot City.ogg"))
+    return -1; // error
+    backgroundMusic.play();
+    //player.~Player(); 
+
 
     //Set Player---------------------------------------------------------------------
     /*
@@ -43,9 +53,7 @@ int main(void){
     //((dimesionEnPixelesDeseada)/TamañoPx(textura.getSize())*escalaActual(1)= nuevaEscala)
     player.setScale(playerSizeX/texturePlayer.getSize().x,playerSizeY/texturePlayer.getSize().y);
     */
-    Player player(100,100,"Resources/Textures/Player/test.png", window);
-
-
+    
     //Set Background---------------------------------------------------------------------
     /*
     Texture texturebackground;
@@ -58,11 +66,9 @@ int main(void){
     //window.draw(background);
     //jugador.draw(window);
     window.display();
-
     //Events---------------------------------------------------------------------
     while (window.isOpen())
-    {
-        
+    {     
         Event event; //Se crea el evento principal
         while (window.pollEvent(event)) //Se inicia el MAINLOOP
         {
@@ -70,6 +76,5 @@ int main(void){
                 window.close();
         }
     }
-
 }
 

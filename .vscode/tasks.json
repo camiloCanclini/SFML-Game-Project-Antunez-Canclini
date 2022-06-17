@@ -18,10 +18,18 @@
                 "-LC:\\SFML-2.5.1\\lib",
                 "-lsfml-graphics-s",
                 "-lsfml-window-s",
+                "-lsfml-audio-s",
                 "-lsfml-system-s",
-                "-lopengl32", 
+                "-lopengl32",
+                "-lopenal32",
+                "-lflac",
+                "-lvorbisenc",
+                "-lvorbisfile",
+                "-lvorbis",
+                "-logg",
                 "-lwinmm",
                 "-lgdi32"
+                
                 
             ],
             "options": {
