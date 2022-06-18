@@ -22,6 +22,7 @@
                 "-lsfml-audio-s",
                 "-lsfml-system-s",
                 "-lopengl32",
+                "-lfreetype",
                 "-lopenal32",
                 "-lflac",
                 "-lvorbisenc",
