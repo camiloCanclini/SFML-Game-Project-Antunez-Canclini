@@ -2,7 +2,7 @@
 using namespace sf;
 using namespace std;
 
-class Background
+class Background : public Drawable
 {
 public:
     Background(string textureSourcePath, sf::RenderWindow &window){
@@ -11,8 +11,9 @@ public:
         background.setScale((float)window.getSize().x/(float)textureBackground.getSize().x,(float)window.getSize().y/(float)textureBackground.getSize().y);
         window.draw(background);
     }
-    void draw(RenderWindow &window){
-       window.draw(background); 
+    void draw(RenderTarget &target, RenderStates states) const override
+    {
+        target.draw(background,states);
     }
 private:
     Texture textureBackground;

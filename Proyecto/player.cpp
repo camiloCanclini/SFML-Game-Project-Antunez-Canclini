@@ -15,9 +15,6 @@ public:
         //((dimesionEnPixelesDeseada)/TamañoPx(textura.getSize())*escalaActual(1)= nuevaEscala)
         player.setScale(playerSizeX/texturePlayer.getSize().x,playerSizeY/texturePlayer.getSize().y);
     }
-    ~Player(){
-        cout << "El objeto se deberia borrar" << endl;
-    }
     void draw(RenderTarget &target, RenderStates states) const override
     {
         target.draw(player,states);
